@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDAO;
-import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -34,8 +33,13 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("Please enter the Customer Id");
+		Long customerId = utils.getLong();
+		LOGGER.info("Please enter the Item Id");
+		Long itemId = utils.getLong();
+		Order order = orderDAO.create(new Order(customerId, itemId));
+		LOGGER.info("Order Created");
+		return order;
 	}
 
 	@Override
