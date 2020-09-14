@@ -30,20 +30,17 @@ public class ItemController implements CrudController<Item> {
 		}
 		return items;
 	}
-	
+
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter the name of the item");
 		String itemName = utils.getString();
 		LOGGER.info("Please enter the price of the item");
 		Float price = utils.getFloat();
-		LOGGER.info("Please enter the quantity of the item");
-		Integer quantity = utils.getInt();
-		Item item = itemDAO.create(new Item(itemName, price, quantity));
+		Item item = itemDAO.create(new Item(itemName, price));
 		LOGGER.info("Item Created");
 		return item;
 	}
-
 
 	@Override
 	public Item update() {
@@ -53,19 +50,16 @@ public class ItemController implements CrudController<Item> {
 		String itemName = utils.getString();
 		LOGGER.info("Please enter the price of the item");
 		Float price = utils.getFloat();
-		LOGGER.info("Please enter the quantity of the item");
-		Integer quantity = utils.getInt();
-
-		Item item = itemDAO.update(new Item(id, itemName, price, quantity));
+		Item item = itemDAO.update(new Item(id, itemName, price));
 		LOGGER.info("Item Updated");
 		return item;
 	}
-	
+
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
 		Long id = utils.getLong();
 		return itemDAO.delete(id);
 	}
-	
+
 }

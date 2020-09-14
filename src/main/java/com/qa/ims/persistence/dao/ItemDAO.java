@@ -37,8 +37,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement
-						.executeQuery("SELECT * FROM items ORDER BY item_id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY item_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -52,8 +51,8 @@ public class ItemDAO implements Dao<Item> {
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO items(item_name, price, quantity) values('" + item.getItemName()
-					+ "','" + item.getPrice() + "','" + item.getQuantity() + "')");
+			statement.executeUpdate("INSERT INTO items(item_name, price) values('" + item.getItemName() + "','"
+					+ item.getPrice() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -74,13 +73,13 @@ public class ItemDAO implements Dao<Item> {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("update items set item_name ='" + item.getItemName() + "', price ='"
-					+ item.getPrice() + "', quantity ='" + item.getQuantity() + "' where item_id =" + item.getId());
+					+ item.getPrice() + "' where item_id =" + item.getId());
 			return readItem(item.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -106,8 +105,8 @@ public class ItemDAO implements Dao<Item> {
 		Long id = resultSet.getLong("item_id");
 		String itemName = resultSet.getString("item_name");
 		Float price = resultSet.getFloat("price");
-		Integer quantity = resultSet.getInt("quantity");
-		return new Item(id, itemName, price, quantity);
+
+		return new Item(id, itemName, price);
 	}
 
 }
