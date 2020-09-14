@@ -13,10 +13,10 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
 
-public class OrderDAO implements Dao<Order>{
+public class OrderDAO implements Dao<Order> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
-	
+
 	@Override
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -46,7 +46,7 @@ public class OrderDAO implements Dao<Order>{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -61,9 +61,30 @@ public class OrderDAO implements Dao<Order>{
 		return null;
 	}
 
+	public Order readOrder(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order_id = " + id);) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 	@Override
-	public Order update(Order t) {
-		// TODO Auto-generated method stub
+	public Order update(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("update orders set customer_id ='" + order.getCustomerId() + "', item_id ='"
+					+ order.getItemId() + "' where order_id =" + order.getId());
+			return readOrder(order.getId());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 
@@ -79,9 +100,7 @@ public class OrderDAO implements Dao<Order>{
 		Long customerId = resultSet.getLong("customer_id");
 		Long itemId = resultSet.getLong("item_id");
 
-
 		return new Order(id, customerId, itemId);
 	}
 
-	
 }
