@@ -4,17 +4,17 @@ public class Item {
 
 	private Long id;
 	private String itemName;
-	private float price;
-	private int quantity;
+	private Float price;
+	private Integer quantity;
 
-	public Item(Long id, String itemName, float price, int quantity) {
+	public Item(Long id, String itemName, Float price, Integer quantity) {
 		this.setId(id);
 		this.setItemName(itemName);
 		this.setPrice(price);
 		this.setQuantity(quantity);
 	}
 
-	public Item(String itemName, float price, int quantity) {
+	public Item(String itemName, Float price, Integer quantity) {
 		this.setItemName(itemName);
 		this.setPrice(price);
 		this.setQuantity(quantity);
@@ -36,25 +36,37 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public float getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", itemName=" + itemName + ", price=" + price + ", quantity=" + quantity + "]";
+		return "id=" + id + ", itemName=" + itemName + ", price=" + price + ", quantity=" + quantity;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+
+		result = prime * result + ((itemName == null) ? 0 : itemName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
+		return result;
 	}
 
 	@Override
@@ -74,12 +86,23 @@ public class Item {
 		} else if (!getItemName().equals(other.getItemName()))
 			return false;
 
-		if (id == null) {
-			if (other.id != null)
+		if (getId() == null) {
+			if (other.getId() != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!getId().equals(other.id))
 			return false;
 
+		if (getPrice() == null) {
+			if (other.getPrice() != null)
+				return false;
+		} else if (!getPrice().equals(other.price))
+			return false;
+
+		if (getQuantity() == null) {
+			if (other.getQuantity() != null)
+				return false;
+		} else if (!getQuantity().equals(other.quantity))
+			return false;
 		return true;
 	}
 
