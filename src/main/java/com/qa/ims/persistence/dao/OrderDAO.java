@@ -61,11 +61,25 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	public Order addItem(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate(String.format("insert into orders values (%s,%s,%s)", order.getId(),
+					order.getCustomerId(), order.getItemId()));
+			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 	public Order readOrder(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order_id = " + id);) {
 			resultSet.next();
+
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e);

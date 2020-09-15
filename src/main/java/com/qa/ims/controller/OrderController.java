@@ -1,6 +1,7 @@
 package com.qa.ims.controller;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +45,33 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
+		Order order = null;
+
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Would you like to EDIT and order or ADD an item to an existing order?");
+		String opt = scanner.nextLine();
+
+		if (opt.equalsIgnoreCase("edit")) {
+			editOrder();
+		} else if (opt.equalsIgnoreCase("add")) {
+			addItem();
+		}
+		return order;
+	}
+
+	public Order addItem() {
+		LOGGER.info("Please enter the id of the Customer");
+		Long customerId = utils.getLong();
+		LOGGER.info("Please enter the id of the Item");
+		Long itemId = utils.getLong();
+
+		Order order = orderDAO.addItem(new Order(customerId, itemId));
+		LOGGER.info("Item Added");
+		return order;
+	}
+	
+	public Order editOrder() {
 		LOGGER.info("Please enter the id of the order you would like to update");
 		Long id = utils.getLong();
 		LOGGER.info("Please enter the id of the Customer");
