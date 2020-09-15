@@ -36,9 +36,7 @@ public class OrderController implements CrudController<Order> {
 	public Order create() {
 		LOGGER.info("Please enter the Customer Id");
 		Long customerId = utils.getLong();
-		LOGGER.info("Please enter the Item Id");
-		Long itemId = utils.getLong();
-		Order order = orderDAO.create(new Order(customerId, itemId));
+		Order order = orderDAO.create(new Order(customerId));
 		LOGGER.info("Order Created");
 		return order;
 	}
@@ -61,16 +59,16 @@ public class OrderController implements CrudController<Order> {
 	}
 
 	public Order addItem() {
-		LOGGER.info("Please enter the id of the Customer");
-		Long customerId = utils.getLong();
-		LOGGER.info("Please enter the id of the Item");
-		Long itemId = utils.getLong();
+		LOGGER.info("Please enter the id of the Order");
+		Long orderId = utils.getLong();
+		LOGGER.info("Please enter the id of the Item you want to add");
+		long itemId = utils.getLong();
 
-		Order order = orderDAO.addItem(new Order(customerId, itemId));
+		Order order = orderDAO.addItem(new Order(orderId, itemId));
 		LOGGER.info("Item Added");
 		return order;
 	}
-	
+
 	public Order editOrder() {
 		LOGGER.info("Please enter the id of the order you would like to update");
 		Long id = utils.getLong();
@@ -86,9 +84,32 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public int delete() {
+
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Would you like to remove the entire order (ALL) or remove a specific item (ITEM)");
+		String opt = scanner.nextLine();
+
+		if (opt.equalsIgnoreCase("all")) {
+			deleteOrder();
+		} else if (opt.equalsIgnoreCase("item")) {
+			deleteItem();
+		}
+
+		return 0;
+	}
+
+	public int deleteOrder() {
 		LOGGER.info("Please enter the id of the order you would like to delete");
 		Long id = utils.getLong();
 		return orderDAO.delete(id);
+	}
+
+	public int deleteItem() {
+		orderDAO.readOrderItem();
+		LOGGER.info("From the list above select the id you want to remove");
+		Long id = utils.getLong();
+		return orderDAO.deleteItem(id);
 	}
 
 }
