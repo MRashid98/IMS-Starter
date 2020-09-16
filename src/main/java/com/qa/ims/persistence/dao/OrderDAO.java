@@ -34,6 +34,30 @@ public class OrderDAO implements Dao<Order> {
 		return new ArrayList<>();
 	}
 
+	public Float sumOrder(Long orderId) {
+		Float sum = 0.0f;
+		String query = String.format(
+				"select items.price from orderitem inner join items on orderitem.item_id=items.item_id where order_id = %s group by orderitem.id",
+				orderId);
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(query)) {
+			List<Float> itemPrice = new ArrayList<>();
+			while (resultSet.next()) {
+				itemPrice.add(resultSet.getFloat("price"));
+			}
+			for (Float i : itemPrice) {
+				sum += i;
+			}
+			System.out.println(sum);
+
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return sum;
+	}
+
 	public void readOrderItem() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();

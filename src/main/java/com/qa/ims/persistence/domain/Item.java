@@ -19,6 +19,10 @@ public class Item {
 
 	}
 
+	public Item(Float price) {
+		this.setPrice(price);
+	}
+
 	public Long getId() {
 		return id;
 	}
