@@ -54,14 +54,6 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter the Customer Id");
 		Long customerId = utils.getLong();
 		Order order = orderDAO.create(new Order(customerId));
-
-		LOGGER.info("Would you like to add items to current order? (YES/NO)");
-		String opt = utils.getString();
-
-		if (opt.equalsIgnoreCase("yes")) {
-			addItem();
-		}
-
 		LOGGER.info("Order Created");
 		return order;
 	}
