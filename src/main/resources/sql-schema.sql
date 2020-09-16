@@ -15,13 +15,18 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
 	PRIMARY KEY (`item_id`)
 ); 
 
-CREATE TABLE `ims`.`orders` (
+CREATE TABLE IF NOT EXISTS `ims`.`orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) DEFAULT NULL,
-  `item_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
-  KEY `customer_id` (`customer_id`),
-  KEY `item_id` (`item_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
-)
+  FOREIGN KEY `customer_id` (`customer_id`) REFERENCES `customers` (`customer_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `ims`.`orderItem` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`order_id` int(11) DEFAULT NULL,
+	`item_id` int(11) DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	FOREIGN KEY `order_id` (`order_id`) REFERENCES `orders` (`order_id`),
+	FOREIGN KEY `item_id` (`item_id`) REFERENCES `items` (`item_id`)
+);

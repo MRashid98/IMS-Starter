@@ -12,8 +12,18 @@ public class Order {
 		this.setItemId(itemId);
 	}
 
-	public Order(Long customerId, Long itemId) {
+	public Order(Long id, Long customerId) {
+		this.setId(id);
 		this.setCustomerId(customerId);
+
+	}
+
+	public Order(Long customerId) {
+		this.setCustomerId(customerId);
+	}
+
+	public Order(Long id, long itemId) {
+		this.setId(id);
 		this.setItemId(itemId);
 	}
 
@@ -43,7 +53,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "id:" + id + ", customerId:" + customerId + ", itemId:" + itemId;
+		return "id:" + id + ", customerId:" + customerId;
 	}
 
 	@Override
