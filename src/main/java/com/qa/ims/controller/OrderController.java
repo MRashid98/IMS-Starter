@@ -55,10 +55,9 @@ public class OrderController implements CrudController<Order> {
 		Long customerId = utils.getLong();
 		Order order = orderDAO.create(new Order(customerId));
 
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Would you like to add items to current order? (YES/NO)");
-		String opt = scanner.nextLine();
+		LOGGER.info("Would you like to add items to current order? (YES/NO)");
+		String opt = utils.getString();
+
 		if (opt.equalsIgnoreCase("yes")) {
 			addItem();
 		}
@@ -71,11 +70,8 @@ public class OrderController implements CrudController<Order> {
 	public Order update() {
 		Order order = null;
 
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Would you like to EDIT and order or ADD an item to an existing order?");
-		String opt = scanner.nextLine();
-
+		LOGGER.info("Would you like to EDIT and order or ADD an item to an existing order?");
+		String opt = utils.getString();
 		if (opt.equalsIgnoreCase("edit")) {
 			editOrder();
 		} else if (opt.equalsIgnoreCase("add")) {
@@ -111,11 +107,8 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public int delete() {
 
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Would you like to remove the entire order (ALL) or remove a specific item (ITEM)");
-		String opt = scanner.nextLine();
-
+		LOGGER.info("Would you like to remove the entire order (ALL) or remove a specific item (ITEM)");
+		String opt = utils.getString();
 		if (opt.equalsIgnoreCase("all")) {
 			deleteOrder();
 		} else if (opt.equalsIgnoreCase("item")) {
