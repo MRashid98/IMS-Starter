@@ -29,14 +29,14 @@ public class CustomerDAOTest {
 	}
 
 	@Test
-	public void testReadAll() throws SQLException {
+	public void testReadAll() {
 		List<Customer> expected = new ArrayList<>();
 		expected.add(new Customer(1L, "jordan", "harrison"));
 		assertEquals(expected, DAO.readAll());
 	}
 
 	@Test
-	public void testReadLatest() throws Exception {
+	public void testReadLatest() {
 		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
 	}
 
