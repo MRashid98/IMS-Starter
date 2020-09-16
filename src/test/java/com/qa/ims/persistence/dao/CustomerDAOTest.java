@@ -2,6 +2,7 @@ package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +29,14 @@ public class CustomerDAOTest {
 	}
 
 	@Test
-	public void testReadAll() {
+	public void testReadAll() throws SQLException {
 		List<Customer> expected = new ArrayList<>();
 		expected.add(new Customer(1L, "jordan", "harrison"));
 		assertEquals(expected, DAO.readAll());
 	}
 
 	@Test
-	public void testReadLatest() {
+	public void testReadLatest() throws Exception {
 		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
 	}
 
