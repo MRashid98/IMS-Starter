@@ -130,7 +130,7 @@ public class CustomerDAO implements Dao<Customer> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return 1;
+		return 0;
 	}
 
 }
