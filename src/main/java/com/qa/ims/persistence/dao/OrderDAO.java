@@ -69,8 +69,9 @@ public class OrderDAO implements Dao<Order> {
 				int itemId = resultSet.getInt("item_id");
 				// Display values
 				System.out.print("ID: " + id);
-				System.out.print(" Order ID: " + orderId);
-				System.out.println(" Item ID: " + itemId);
+				System.out.print("; Order ID: " + orderId);
+				System.out.print("; Item ID: " + itemId);
+				System.out.println("");
 			}
 
 		} catch (SQLException e) {
@@ -150,8 +151,10 @@ public class OrderDAO implements Dao<Order> {
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from orderitem where order_id = " + id);
+				Statement statement = connection.createStatement();
+				Statement statement2 = connection.createStatement();) {
+
+			statement2.executeUpdate("delete from orderitem where order_id = " + id);
 			return statement.executeUpdate("delete from orders where order_id = " + id);
 		} catch (Exception e) {
 			LOGGER.debug(e);

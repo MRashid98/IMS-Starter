@@ -32,10 +32,12 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public List<Customer> readAll() {
+		List<Customer> customers = new ArrayList<>();
+
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("select * from customers");) {
-			List<Customer> customers = new ArrayList<>();
+
 			while (resultSet.next()) {
 				customers.add(modelFromResultSet(resultSet));
 			}
@@ -44,13 +46,14 @@ public class CustomerDAO implements Dao<Customer> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return new ArrayList<>();
+		return customers;
 	}
 
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY customer_id DESC LIMIT 1");) {
+				ResultSet resultSet = statement
+						.executeQuery("SELECT * FROM customers ORDER BY customer_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -71,7 +74,7 @@ public class CustomerDAO implements Dao<Customer> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("INSERT INTO customers(first_name, surname) values('" + customer.getFirstName()
 					+ "','" + customer.getSurname() + "')");
-			return readLatest();
+			return customer;
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
