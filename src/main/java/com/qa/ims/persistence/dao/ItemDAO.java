@@ -58,7 +58,7 @@ public class ItemDAO implements Dao<Item> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return readLatest();
+		return null;
 	}
 
 	public Item readItem(Long id) {

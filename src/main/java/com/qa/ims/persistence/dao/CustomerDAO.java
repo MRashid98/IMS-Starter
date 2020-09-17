@@ -79,7 +79,7 @@ public class CustomerDAO implements Dao<Customer> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return customer;
+		return null;
 	}
 
 	public Customer readCustomer(Long id) {

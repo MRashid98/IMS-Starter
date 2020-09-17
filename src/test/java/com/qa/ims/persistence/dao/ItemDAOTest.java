@@ -24,7 +24,9 @@ public class ItemDAOTest {
 	@Test
 	public void testCreate() {
 		final Item created = new Item(2L, "Phone Case", 4.99F);
+		final Item noPrice = new Item(3L, "PS5", null);
 		assertEquals(created, DAO.create(created));
+		assertEquals(null, DAO.create(noPrice));
 	}
 
 	@Test
@@ -46,7 +48,7 @@ public class ItemDAOTest {
 	}
 
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws Exception {
 		final Item updated = new Item(1L, "OnePlus 8t", 799.99F);
 		assertEquals(updated, DAO.update(updated));
 	}
@@ -54,6 +56,7 @@ public class ItemDAOTest {
 	@Test
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
+		assertEquals(0, DAO.delete(3));
 	}
 
 }
