@@ -43,15 +43,6 @@ public class OrderDAOTest {
 	}
 
 	@Test
-	public void testAddItem() {
-		final Long orderId = 1L;
-		final long itemId = 1L;
-
-		final Order newItem = new Order(orderId, itemId);
-		assertEquals(newItem, DAO.addItem(newItem));
-	}
-
-	@Test
 	public void testReadAll() {
 		final Long orderId = 1L;
 		final Long customerId = 3L;
@@ -94,7 +85,7 @@ public class OrderDAOTest {
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
-	
+
 	@Test
 	public void testDeleteItem() {
 		assertEquals(1, DAO.deleteItem(1));
