@@ -1,7 +1,7 @@
-Coverage: 34%
+Coverage: 70.3%
 # Project Title
 
-One Paragraph of project description goes here
+Inventory Management System to be used by member of staff interacting with it through a Command Line Interface. The Application allows the user to perform CRUD operations on various aspects of the system, from the Customer and Items information to the Order details.
 
 ## Getting Started
 
@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+No prerequisites necessary
 
 ```
 Give examples
